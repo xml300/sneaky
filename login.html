@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Horizons - Login</title>
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- MOBILE_IOS_ICON_SUPPORT_V1 -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="New Horizons">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+
+<body>
+
+  <div class="overlay" id="pageOverlay"></div>
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="brand">
+        <img src="/static/images/nh_logo_20.png" alt="New Horizons Logo" class="brand-logo" />
+        <h2>Welcome to <span>New Horizons</span></h2>
+      </div>
+      <p class="flash-message danger" id="login-security-alert" role="alert" aria-live="assertive">Location verification
+        could not be confirmed. Please keep location enabled and try again.</p>
+      <p class="status" id="geo-status">Location access is required for regular staff login.</p>
+
+      <div class="network-status-row">
+        <span class="network-chip online" id="login-network-chip">Online</span>
+      </div>
+
+      <div class="login-network-note" id="login-network-note">
+        <strong>Secure login notice:</strong>
+        Internet and location permission are required to sign in.
+        Staff must be within an approved branch radius before attendance access is allowed.
+        If connection drops after successful sign-in, attendance can be saved and synced automatically when internet
+        returns.
+      </div>
+
+      <form method="POST" action="/auth/login" id="login-form" autocomplete="off">
+        <!-- ✅ REQUIRED by hardened auth_bp.py -->
+        <input type="hidden" name="csrf_token" value="563a691958f0f9740c02a0dc689d1cc7a7ec9e96292fa37f" />
+
+        <input type="hidden" name="latitude" id="latitude" />
+        <input type="hidden" name="longitude" id="longitude" />
+        <input type="hidden" name="geo_accuracy" id="geo_accuracy" />
+        <input type="hidden" name="geo_samples" id="geo_samples" />
+
+        <div class="input-group">
+          <label for="staff_id">Staff ID</label>
+          <input type="text" name="staff_id" id="staff_id" placeholder="Enter your Staff ID" required
+            autocomplete="username" />
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" placeholder="Enter your password" required
+            autocomplete="current-password" />
+        </div>
+
+        <button type="submit" class="btn-login" id="submit-btn">Login</button>
+        <button type="button" class="btn-secondary" id="btn-request-geo">Request Location</button>
+
+        <p class="dev-note" id="dev-note">
+          Developer convenience enabled: login allowed without location.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    &copy; <span>2026</span> New Horizons. All Rights Reserved.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

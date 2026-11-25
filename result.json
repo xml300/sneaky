@@ -1,0 +1,50 @@
+{
+    "csrf_token": "563a691958f0f9740c02a0dc689d1cc7a7ec9e96292fa37f",
+    "staff_id": "",
+    "password": "",
+    "latitude": 6.597833,
+    "longitude": 3.339668,
+    "geo_accuracy": 150,
+    "geo_samples": [
+        {
+            "lat": 6.597806,
+            "lng": 3.339668,
+            "accuracy": 150,
+            "captured_at": 1795584634111,
+            "provider_ts": 1795584634011,
+            "speed": 1.5,
+            "heading": 0,
+            "altitude": None
+        },
+        {
+            "lat": 6.597815,
+            "lng": 3.339668,
+            "accuracy": 150,
+            "captured_at": 1795584634766,
+            "provider_ts": 1795584634666,
+            "speed": 1.5,
+            "heading": 0,
+            "altitude": None
+        },
+        {
+            "lat": 6.597824,
+            "lng": 3.339668,
+            "accuracy": 150,
+            "captured_at": 1795584635421,
+            "provider_ts": 1795584635321,
+            "speed": 1.5,
+            "heading": 0,
+            "altitude": None
+        },
+        {
+            "lat": 6.597833,
+            "lng": 3.339668,
+            "accuracy": 150,
+            "captured_at": 1795584636076,
+            "provider_ts": 1795584635976,
+            "speed": 1.5,
+            "heading": 0,
+            "altitude": None
+        }
+    ]
+}
