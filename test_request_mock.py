@@ -16,8 +16,10 @@ Flow (mirrors the browser JS in staffclockin/app.js):
 
   1. POST /attendance/api/attendance/security-challenge   -> {challenge_id, challenge_token}
      (saved to security_challenge.json)
-  2. POST /attendance/upload_selfie  (multipart PNG)       -> {ok, selfie_url}
-  3. POST /attendance/check_in_out  (JSON)                 -> submits everything
+  2. POST /attendance/api/liveness_verify  (JSON)          -> {ok, ...}
+     (saved to liveness_verify.json)
+  3. POST /attendance/upload_selfie  (multipart PNG)       -> {ok, selfie_url}
+  4. POST /attendance/check_in_out  (JSON)                 -> submits everything
 
 Set BASE_URL (default http://localhost:5000), STAFF_ID and SELFIE_PATH via .env
 or environment variables before running.
@@ -30,6 +32,7 @@ import os
 import time
 import random
 import string
+import base64
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -44,6 +47,24 @@ def inout(prompt="Press Enter to continue..."):
     except KeyboardInterrupt:
         print("\n⏹  interrupted by user")
         raise SystemExit(0)
+
+
+# Liveness challenge strings (mirrors staffclockin/app.js lines ~1582-1589)
+LIVENESS_CHALLENGES = [
+    "Face the camera, turn your head slightly to the left, then face front again",
+    "Face the camera, turn your head slightly to the right, then face front again",
+]
+
+# Pick one deterministically (no random camera needed for a scripted test)
+liveness_challenge = LIVENESS_CHALLENGES[0]
+
+# Encode the selfie PNG as data URLs for the three liveness frames
+# (front / turn / final). In a real browser these come from the camera;
+# here we reuse the same PNG for all three frames.
+def _png_to_data_url(path: str) -> str:
+    with open(path, "rb") as f:
+        b64 = base64.b64encode(f.read()).decode("ascii")
+    return f"data:image/png;base64,{b64}"
 
 
 # ---- mock base URL (override with BASE_URL env var) ----
@@ -121,30 +142,67 @@ with open("security_challenge.json", "w", encoding="utf-8") as f:
 print("✅ security challenge saved to security_challenge.json")
 print(f"   challenge_id   : {challenge_id}")
 print(f"   challenge_token: {challenge_token[:40]}…")
-inout("⏎  Press Enter to continue to Step 2 (upload selfie)...")
+inout("⏎  Press Enter to continue to Step 2 (liveness verify)...")
 
 # ============================================================
-# Step 2 — import a PNG and post it to upload_selfie (multipart)
+# Step 2 — liveness verify (JSON)
+# ============================================================
+# Mirror app.js: front_frame / turn_frame / final_frame are data URLs.
+# For a scripted test we reuse the same selfie PNG for all three frames.
+liveness_payload = {
+    "challenge": liveness_challenge,
+    "front_frame": _png_to_data_url(selfie_path),
+    "turn_frame": _png_to_data_url(selfie_path),
+    "final_frame": _png_to_data_url(selfie_path),
+}
+
+r2 = s.post(
+    f"{BASE}/attendance/api/liveness_verify",
+    json=liveness_payload,
+    timeout=30,
+)
+print(f"liveness_verify status: {r2.status_code}")
+print(f"liveness_verify body: {r2.text[:600]}")
+r2.raise_for_status()
+
+liveness_data = r2.json()
+
+# Persist the liveness response for reuse / inspection
+with open("liveness_verify.json", "w", encoding="utf-8") as f:
+    json.dump(liveness_data, f, indent=2)
+print("✅ liveness verify saved to liveness_verify.json")
+print(f"   liveness_challenge : {liveness_challenge}")
+print(f"   liveness_completed : {liveness_data.get('ok', False)}")
+# Reasonable defaults mirroring app.js initial liveness state
+liveness_completed = bool(liveness_data.get("ok", False))
+liveness_status = "COMPLETED" if liveness_completed else "PENDING"
+liveness_backend_status = "PASSED" if liveness_completed else "PENDING"
+liveness_movement_score = 1.0 if liveness_completed else 0.0
+inout("⏎  Press Enter to continue to Step 3 (upload selfie)...")
+
+# ============================================================
+# Step 3 — import a PNG and post it to upload_selfie (multipart)
 # ============================================================
 selfie_path = os.getenv("SELFIE_PATH", "selfie.png")
 if not os.path.exists(selfie_path):
     raise SystemExit(f"❌ selfie PNG not found at {selfie_path} (set SELFIE_PATH)")
 
+# app.js uploads with field name "file" (not "selfie")
 with open(selfie_path, "rb") as f:
-    files = {"selfie": ("selfie.png", f, "image/png")}
-    r2 = s.post(f"{BASE}/attendance/upload_selfie", files=files, timeout=30)
+    files = {"file": ("selfie.png", f, "image/png")}
+    r3 = s.post(f"{BASE}/attendance/upload_selfie", files=files, timeout=30)
 
-print(f"upload_selfie status: {r2.status_code}")
-print(f"upload_selfie body: {r2.text[:600]}")
-r2.raise_for_status()
+print(f"upload_selfie status: {r3.status_code}")
+print(f"upload_selfie body: {r3.text[:600]}")
+r3.raise_for_status()
 
-selfie_data = r2.json()
+selfie_data = r3.json()
 selfie_url = selfie_data.get("selfie_url") or selfie_data.get("url") or selfie_data.get("selfie")
 print(f"✅ selfie uploaded: {selfie_url}")
-inout("⏎  Press Enter to continue to Step 3 (check_in_out)...")
+inout("⏎  Press Enter to continue to Step 4 (check_in_out)...")
 
 # ============================================================
-# Step 3 — post everything to check_in_out (JSON)
+# Step 4 — post everything to check_in_out (JSON)
 # ============================================================
 payload = {
     "action": action,
@@ -155,16 +213,23 @@ payload = {
     "client_ts": client_ts,
     "geo_samples": geo_samples,
     "selfie_url": selfie_url,
+    # Liveness fields (mirrors staffclockin/app.js lines ~2210-2242)
+    "liveness_challenge": liveness_challenge,
+    "liveness_completed": liveness_completed,
+    "liveness_status": liveness_status,
+    "liveness_backend_status": liveness_backend_status,
+    "liveness_movement_score": liveness_movement_score,
+    # Security challenge
     "security_challenge_id": challenge_id,
     "security_challenge_token": challenge_token,
 }
 
 print(f"payload: {json.dumps(payload, indent=2)}")
-r3 = s.post(f"{BASE}/attendance/check_in_out", json=payload, timeout=60)
-print(f"check_in_out status: {r3.status_code}")
-print(f"check_in_out body: {r3.text[:1500]}")
+r4 = s.post(f"{BASE}/attendance/check_in_out", json=payload, timeout=60)
+print(f"check_in_out status: {r4.status_code}")
+print(f"check_in_out body: {r4.text[:1500]}")
 
-if r3.ok:
+if r4.ok:
     print("✅ check_in_out submitted successfully")
 else:
     print("❌ check_in_out failed")
