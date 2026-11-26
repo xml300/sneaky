@@ -1,0 +1,311 @@
+<!-- ATTENDANCE_DUPLICATE_REQUEST_LOCK_V1 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Attendance Clock | The New Horizons</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    
+    
+    
+    
+    
+
+    <link rel="stylesheet" href="style.css">
+    
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+
+</head>
+
+<body>
+
+    <aside id="sidebar" class="sidebar">
+        <div class="logo-text">New Horizons</div>
+
+        
+
+        <ul class="nav-links">
+            
+            
+
+                
+
+                
+
+                
+
+            
+        </ul>
+
+        <ul class="nav-links" style="margin-top:auto; border-top:1px solid #eee; padding-top:10px">
+            <li><a href="/auth/logout">🚪 Logout</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-container">
+        <header class="header">
+            <button id="menu-toggle" class="menu-toggle">☰ Menu</button>
+            
+                <span style="font-size:.9rem; margin-right:15px;">
+                    Logged in: <b>NH-1224</b>
+                    
+                </span>
+                <a href="/auth/logout" class="btn btn-sm btn-outline-danger">Sign Out</a>
+            
+        </header>
+
+        <div class="content">
+            
+                
+            
+
+            
+<header class="nh-header">
+  <div class="nh-logo">
+    <div class="nh-logo-icon">NH</div>
+    <div class="nh-logo-text">
+      The New Horizons<br><small>Secure Attendance System</small>
+    </div>
+  </div>
+
+    <div class="nh-actions">
+    <button class="sound-toggle" id="btnSound" type="button" title="Sound is OFF">
+      <i class="fas fa-volume-mute"></i>
+    </button>
+
+    <a class="logout-btn" href="/auth/logout" title="Sign out">
+      <i class="fas fa-right-from-bracket"></i>
+    </a>
+
+    <div class="nh-user-badge">
+      <i class="fas fa-user-circle"></i>
+      Peterben Ajuga • Regular Staff • ID: NH-1224
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-att-menu" aria-label="Attendance quick menu">
+  <a href="/staff/dashboard">
+    <i class="fas fa-house"></i>
+    Dashboard
+  </a>
+
+  <a href="/attendance/history">
+    <i class="fas fa-table-list"></i>
+    History
+  </a>
+
+  <a href="/auth/change-password">
+    <i class="fas fa-key"></i>
+    Password
+  </a>
+
+  <a href="/auth/logout">
+    <i class="fas fa-right-from-bracket"></i>
+    Logout
+  </a>
+</nav>
+
+
+
+
+<main class="main-content">
+  <div class="attendance-card">
+    <div class="welcome-section">
+      <h1><i class="fas fa-fingerprint"></i> Secure Attendance Hub</h1>
+      <p class="current-date">2026-11-25</p>
+
+      <div style="margin-top:10px; background: rgba(243,246,253,0.9); border:1px solid rgba(0,176,255,0.25); padding:12px 14px; border-radius:14px; text-align:left;">
+        <div style="font-weight:900; color: var(--nh-primary); margin-bottom:4px;">
+          Welcome to the New Horizons Attendance Management App, Peterben Ajuga.
+        </div>
+        <div style="font-size:0.9rem; color:#374151; font-weight:700;">
+          <strong>Company Identity:</strong> Regular Staff.<br>
+          <strong>Complete the 3 verification layers below:</strong> device, location, and clear selfie before you check in or check out.
+        </div>
+      </div>
+    </div>
+
+    <div class="time-display-container">
+      <div class="current-time" id="live-clock">08:41:42 AM</div>
+    </div>
+
+    <div class="status-indicator status-checked-in" id="attendance-status">
+      
+        <i class="fas fa-check-circle"></i>
+        <span>CHECKED IN • Since 2026-11-25T07:37:59.256214+00:00</span>
+      
+    </div>
+
+    <div class="security-grid">
+      <div class="security-item pending" id="device-status">
+        <div class="security-icon"><i class="fas fa-mobile-alt"></i></div>
+        <div class="security-text">
+          <span class="security-step">Layer 1</span>
+          <strong>Device Verification</strong>
+          <div class="security-detail" id="device-detail">Checking…</div>
+        </div>
+      </div>
+
+      <div class="security-item pending" id="location-status">
+        <div class="security-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="security-text">
+          <span class="security-step">Layer 2</span>
+          <strong>Location Verification</strong>
+          <div class="security-detail" id="location-detail">Acquiring…</div>
+        </div>
+      </div>
+
+      <div class="security-item pending" id="selfie-status">
+        <div class="security-icon"><i class="fas fa-camera"></i></div>
+        <div class="security-text">
+          <span class="security-step">Layer 3</span>
+          <strong>Selfie Verification</strong>
+          <div class="security-detail" id="selfie-detail">Required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="geo-panel" id="geoPanel" style="display:none;">
+      <div class="geo-title">
+        <i class="fas fa-location-dot"></i> Branch proximity
+      </div>
+      <div class="geo-lines" id="geoLines">—</div>
+      <div class="geo-badge warn" id="geoBadge" style="display:none;">—</div>
+    </div>
+
+    <div class="camera-panel">
+      <div class="camera-row">
+        <div style="font-weight:900; color: var(--nh-primary);">
+          <i class="fas fa-camera me-1"></i> <strong>Clear Selfie Verification Required</strong>
+        </div>
+
+        <div class="camera-actions">
+          <button class="btn-soft gray" id="btnOpenCamera" type="button">
+            <i class="fas fa-video"></i> Open Camera
+          </button>
+          <button class="btn-soft primary" id="btnCapture" type="button" disabled>
+            <i class="fas fa-camera-retro"></i> Capture Selfie
+          </button>
+        </div>
+      </div>
+
+      <div id="livenessInstruction"
+           style="display:none; margin:12px 0; padding:12px 14px; border-radius:14px; border:2px solid #f59e0b; background:#fff7ed; color:#7c2d12; font-weight:900; text-align:center;">
+        <strong>Open camera</strong> and keep your full face inside the frame. Turn your face slightly left or right as instructed, then face front again. If it still fails, slightly tilt the phone left and right while keeping your face visible.
+      </div>
+
+      <div class="cam-wrap">
+        <div>
+          <video id="camVideo" playsinline autoplay muted style="display:none;"></video>
+          <div class="hint" id="camHint">
+            <strong>Tap Open Camera</strong>, allow permission, keep your face inside the frame, turn your face slightly left or right, then face front again before you <strong>Capture Selfie</strong>.
+          </div>
+        </div>
+
+        <div>
+          <img class="preview" id="selfiePreview" alt="Selfie preview" style="display:none;">
+          <canvas id="selfieCanvas" style="display:none;"></canvas>
+          <div class="hint" id="selfieHint">
+            <strong>Your fresh selfie will be attached to this attendance record.</strong>
+            <br><span style="opacity:.85;">Make sure your full face is visible, clear, bright, and not cut off.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <button
+      id="attendance-btn"
+      class="action-button check-out"
+      type="button"
+      disabled
+    >
+      <i class="fas fa-shield-halved"></i> Complete the 3 verification layers to continue
+    </button>
+  </div>
+</main>
+
+<div class="nh-clockout-modal-backdrop" id="nhClockoutModal" aria-hidden="true">
+  <div class="nh-clockout-modal" role="dialog" aria-modal="true" aria-labelledby="nhClockoutTitle">
+    <div class="nh-clockout-modal-head">
+      <i class="fas fa-triangle-exclamation"></i>
+      <h2 id="nhClockoutTitle">Confirm Staff Sign-Out</h2>
+    </div>
+    <div class="nh-clockout-modal-body">
+      <div class="nh-clockout-warning">
+        You are about to mark <strong>OUT</strong> for today.
+        Only continue if you are sure you are closing your attendance for the day.
+      </div>
+      <div class="nh-clockout-small">
+        If this was a mistake, press <strong>Cancel</strong>. Your attendance will remain checked in.
+      </div>
+    </div>
+    <div class="nh-clockout-actions">
+      <button type="button" class="nh-clockout-btn nh-clockout-cancel" id="nhClockoutCancel">
+        Cancel
+      </button>
+      <button type="button" class="nh-clockout-btn nh-clockout-confirm" id="nhClockoutConfirm">
+        Yes, Mark Me Out
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="nh-attclose-modal-backdrop" id="nhAttendanceClosedModal" aria-hidden="true">
+  <div class="nh-attclose-modal" role="dialog" aria-modal="true" aria-labelledby="nhAttendanceClosedTitle">
+    <div class="nh-attclose-modal-head">
+      <i class="fas fa-ban"></i>
+      <h2 id="nhAttendanceClosedTitle">Attendance Closed</h2>
+    </div>
+    <div class="nh-attclose-modal-body">
+      <div class="nh-attclose-warning" id="nhAttendanceClosedMessage">
+        Attendance marking has closed for today at 12:00 PM. You can only sign out if you marked in before the cutoff time. Please contact HR if you need assistance.
+      </div>
+      <div class="nh-attclose-small">
+        This notice is based on the official attendance policy time set by HR/Developer.
+      </div>
+    </div>
+    <div class="nh-attclose-actions">
+      <button type="button" class="nh-attclose-ok" id="nhAttendanceClosedOk">
+        I Understand
+      </button>
+    </div>
+  </div>
+</div>
+
+<footer class="nh-footer">
+  <div class="footer-content">
+    <p class="footer-message">
+      <i class="fas fa-shield-alt"></i>
+      Secure Attendance System<br>
+      Developed for New Horizons Nigeria
+    </p>
+  </div>
+</footer>
+
+
+
+
+
+        </div>
+    </div>
+
+    
+
+    
+  <script src="app.js"></script>
+</body>
+</html>

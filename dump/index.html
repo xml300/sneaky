@@ -1,0 +1,957 @@
+<!-- STAFF_LEAVE_LIVE_WORKFLOW_V1 -->
+<!-- STAFF_REMOVE_SPEAK_EMBED_MANAGER_IN_LEAVE_V6 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Dashboard | New Horizons</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  
+
+</head>
+
+<body>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="logo-text">New Horizons</div>
+
+
+
+    <ul class="nav-links">
+
+    </ul>
+
+    <ul class="nav-links" style="margin-top:auto; border-top:1px solid #eee; padding-top:10px">
+      <li><a href="/auth/logout">🚪 Logout</a></li>
+    </ul>
+  </aside>
+
+  <div class="main-container">
+    <header class="header">
+      <button id="menu-toggle" class="menu-toggle">☰ Menu</button>
+
+      <span style="font-size:.9rem; margin-right:15px;">
+        Logged in: <b>NH-1224</b>
+
+      </span>
+      <a href="/auth/logout" class="btn btn-sm btn-outline-danger">Sign Out</a>
+
+    </header>
+
+    <div class="content">
+
+
+
+      <div class="alert alert-success m-3">
+
+        Secure session active.
+
+      </div>
+
+
+
+
+      <header class="nh-header">
+        <div class="brand">
+          <div class="brand-logo-wrap" aria-hidden="true">
+            <img src="/static/images/nh_logo_20.png" alt="New Horizons Logo" class="brand-logo">
+          </div>
+          <div class="txt">
+            <div class="t1">New Horizons</div>
+            <div class="t2">Secure Attendance System</div>
+          </div>
+        </div>
+
+        <div class="hdr-actions">
+          <!-- ✅ small speech toggle icon like your sample -->
+          <button class="icon-pill" id="btnSound" type="button" title="Sound is OFF" aria-label="Toggle sound">
+            <i class="fa-solid fa-volume-xmark"></i>
+          </button>
+
+          <button class="btn-report" type="button" data-bs-toggle="modal" data-bs-target="#reportIssueModal">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            Report a Problem
+          </button>
+
+          <div class="user-badge" title="Signed in user">
+            <i class="fa-solid fa-user-circle"></i>
+            Peterben Ajuga &bull; Regular Staff
+          </div>
+        </div>
+      </header>
+
+      <div class="wrap">
+        <div class="dash-card">
+          <div class="card-orb"></div>
+          <div class="card-orb2"></div>
+
+
+          <!-- Staff Dashboard Hero -->
+          <div class="staff-hero">
+            <div class="staff-hero-main">
+              <h1>Welcome back, Peterben Ajuga</h1>
+              <p>
+                Use your Attendance Hub to check in or check out securely.
+                Location and selfie verification are handled inside the hub.
+              </p>
+
+              <div class="quick-status-grid">
+                <div class="quick-status-item">
+                  <i class="fa-regular fa-calendar"></i>
+                  <strong id="live-date">2026-11-25</strong>
+                  <span>Today</span>
+                </div>
+
+                <div class="quick-status-item">
+                  <i class="fa-regular fa-clock"></i>
+                  <strong id="live-clock">08:28:19 AM</strong>
+                  <span>Live Time</span>
+                </div>
+
+                <div class="quick-status-item">
+                  <i class="fa-solid fa-id-badge"></i>
+                  <strong>Regular Staff</strong>
+                  <span>Company Identity</span>
+                </div>
+              </div>
+
+              <div style="display:flex; justify-content:center;">
+
+                <div class="status in">
+                  <i class="fa-solid fa-circle-check"></i>
+                  Checked IN
+
+                  <span style="font-weight:900; opacity:.85;">(2026-11-25T07:37:59.256214+00:00)</span>
+
+                </div>
+
+              </div>
+            </div>
+
+            <div class="staff-mini-card">
+              <div class="small-label">Signed in as</div>
+
+              <div class="big-name">
+                <i class="fa-solid fa-user-check me-1"></i>
+                Peterben Ajuga
+              </div>
+
+              <div class="role-chip">
+                <i class="fa-solid fa-shield-halved"></i>
+                Regular Staff
+              </div>
+
+
+
+            </div>
+          </div>
+
+          <!-- Attendance Actions -->
+          <div class="panel cta" style="margin-top:14px;">
+            <div class="title">
+              <i class="fa-solid fa-fingerprint"></i>
+              Attendance Hub
+            </div>
+
+            <div class="action-grid">
+              <a class="btn-hub" href="/attendance/staff">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                OPEN ATTENDANCE HUB
+              </a>
+
+
+
+
+              <!-- STAFF_LEAVE_APPLICATION_PLACEHOLDER_V1 -->
+              <button class="btn-secondary btn-leave-dark-butter" type="button" data-bs-toggle="modal"
+                data-bs-target="#staffLeaveComingSoonModal" title="Leave Application - Coming Soon">
+                <i class="fa-solid fa-calendar-check"></i>
+                APPLY FOR LEAVE
+                <span style="
+          margin-left:8px;
+          padding:3px 8px;
+          border-radius:999px;
+          background:rgba(255,255,255,.18);
+          font-size:.68rem;
+          font-weight:900;
+        ">
+                  COMING SOON
+                </span>
+              </button>
+
+              <!-- LINE_MANAGER_CONTROL_V1 -->
+
+
+
+
+              <a class="btn-secondary btn-change-password-mature" href="/auth/change-password">
+                <i class="fa fa-key"></i>
+                CHANGE PASSWORD
+              </a>
+
+
+
+
+
+              <a class="btn-secondary btn-logout-mature" href="/auth/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                LOGOUT
+              </a>
+            </div>
+
+
+            <!-- STAFF_TEAM_LEAVE_MOVED_ABOVE_FOOTER_SOURCE_V2 -->
+            <div id="staffTeamLeaveDashboardNoticeV1" class="staff-team-leave-button-only-source-fix-v1 d-none">
+              <div class="staff-team-leave-button-row-v1">
+                <button type="button" id="btnOpenStaffTeamLeaveModalV1">
+                  Team Leave Requests
+                </button>
+
+                <span id="staffTeamLeavePendingBadgeV1">
+                  0 Pending
+                </span>
+
+                <button type="button" id="btnRefreshStaffTeamLeaveNoticeV1" title="Refresh team leave requests">
+                  ↻
+                </button>
+              </div>
+
+              <span id="staffTeamLeaveNoticeTextV1">
+                No pending team leave request at the moment.
+              </span>
+            </div>
+
+            <div class="staff-help-card">
+              <i class="fa-solid fa-circle-info me-1"></i>
+              Tip: Allow location and camera permission before opening the Attendance Hub.
+              If either permission is blocked, attendance may fail.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <footer class="footer upgraded-footer">
+        <div class="footer-main-line">
+          <i class="fa-solid fa-shield-halved"></i>
+          Secure Attendance System
+        </div>
+
+        <div class="footer-sub-line">
+          Developed for New Horizons Nigeria
+        </div>
+      </footer>
+      <!-- =========================================================
+     STAFF_LEAVE_APPLICATION_PLACEHOLDER_V1
+     Leave application route is connected to the live workflow.
+========================================================== -->
+
+      <!-- =========================================================
+     LEAVE_PREVIEW_AND_HR_WORKFLOW_UI_V3
+     Connected staff submission and history interface.
+========================================================== -->
+      <div class="modal fade" id="staffLeaveComingSoonModal" tabindex="-1" aria-labelledby="staffLeavePreviewModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+
+          <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+            <!-- LEAVE_COMING_SOON_LOCK_V1 -->
+            <section class="leave-coming-soon-v1" aria-labelledby="leaveComingSoonTitleV1">
+              <div class="leave-coming-soon-orb-v1 leave-coming-soon-orb-one-v1"></div>
+              <div class="leave-coming-soon-orb-v1 leave-coming-soon-orb-two-v1"></div>
+
+              <button type="button" class="leave-coming-soon-close-v1" data-bs-dismiss="modal" aria-label="Close"
+                title="Close">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+
+              <div class="leave-coming-soon-inner-v1">
+                <div class="leave-coming-soon-icon-v1" aria-hidden="true">
+                  <i class="fa-solid fa-calendar-check"></i>
+                </div>
+
+                <div class="leave-coming-soon-kicker-v1">STAFF LEAVE SERVICES</div>
+
+                <h2 id="leaveComingSoonTitleV1" class="leave-coming-soon-title-v1">
+                  Leave Application
+                </h2>
+
+                <div class="leave-coming-soon-badge-v1">
+                  <span class="leave-coming-soon-dot-v1"></span>
+                  COMING SOON
+                </div>
+
+                <p class="leave-coming-soon-copy-v1">
+                  We are refining the leave application experience to provide a
+                  simpler, more reliable and more secure workflow for staff,
+                  line managers and HR.
+                </p>
+
+                <div class="leave-coming-soon-status-grid-v1">
+                  <div class="leave-coming-soon-status-card-v1">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Secure Workflow</span>
+                  </div>
+                  <div class="leave-coming-soon-status-card-v1">
+                    <i class="fa-solid fa-user-check"></i>
+                    <span>Manager Review</span>
+                  </div>
+                  <div class="leave-coming-soon-status-card-v1">
+                    <i class="fa-solid fa-building-shield"></i>
+                    <span>HR Approval</span>
+                  </div>
+                </div>
+
+                <div class="leave-coming-soon-note-v1">
+                  <i class="fa-solid fa-circle-info"></i>
+                  <span>
+                    New leave applications are temporarily unavailable.
+                    Existing leave records and approvals are preserved.
+                    For urgent leave matters, please contact HR.
+                  </span>
+                </div>
+
+                <div class="leave-coming-soon-actions-v1">
+                  <button type="button" class="leave-coming-soon-history-v1"
+                    onclick="if (typeof loadStaffLeaveHistoryV1 === 'function') { loadStaffLeaveHistoryV1(); }">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    My Leave History
+                  </button>
+
+                  <button type="button" class="leave-coming-soon-dismiss-v1" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                </div>
+
+                <div class="leave-coming-soon-footer-v1">
+                  <i class="fa-solid fa-lock"></i>
+                  Your existing leave information remains protected.
+                </div>
+              </div>
+            </section>
+
+
+            <div class="staff-leave-preview-header text-white p-4">
+
+              <div class="d-flex justify-content-between align-items-start gap-3">
+
+                <div>
+                  <div class="small text-uppercase fw-bold opacity-75">
+                    Staff Leave Services
+                  </div>
+
+                  <h4 class="modal-title fw-black mt-1 mb-1" id="staffLeavePreviewModalLabel">
+                    <i class="fa-solid fa-calendar-check me-2"></i>
+                    Leave Application Centre
+                  </h4>
+
+                  <div class="small opacity-90">
+                    Submit through the Staff → Line Manager → HR approval workflow
+                  </div>
+                </div>
+
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+
+              </div>
+
+            </div>
+
+
+            <div class="modal-body p-4 bg-light">
+
+              <div class="row g-3 mb-4">
+
+                <div class="col-md-4">
+                  <div class="leave-workflow-step active h-100">
+                    <div class="leave-workflow-number">1</div>
+
+                    <div>
+                      <div class="fw-bold">Staff Application</div>
+                      <div class="small text-muted">
+                        Select dates and submit a leave request.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="leave-workflow-step h-100">
+                    <div class="leave-workflow-number">2</div>
+
+                    <div>
+                      <div class="fw-bold">Line Manager Review</div>
+                      <div class="small text-muted">
+                        Manager recommends approval or rejection.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="leave-workflow-step h-100">
+                    <div class="leave-workflow-number">3</div>
+
+                    <div>
+                      <div class="fw-bold">HR Final Decision</div>
+                      <div class="small text-muted">
+                        HR approves, partially approves or rejects.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+
+              <div class="row g-4">
+
+                <div class="col-lg-8">
+
+                  <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                    <div class="card-body p-4">
+
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div>
+                          <h5 class="fw-bold mb-1">
+                            New Leave Application
+                          </h5>
+
+                          <div class="small text-muted">
+                            Complete the information below.
+                          </div>
+                        </div>
+
+                        <span class="badge rounded-pill text-bg-success">
+                          Live Workflow
+                        </span>
+
+                      </div>
+
+
+                      <div class="row g-3">
+
+                        <div class="col-md-6">
+                          <label class="form-label fw-bold">
+                            Leave Type
+                          </label>
+
+                          <select class="form-select" id="staffLeavePreviewType">
+                            <option value="">
+                              -- Select Leave Type --
+                            </option>
+
+                            <option>Annual Leave</option>
+                            <option>Casual Leave</option>
+                            <option>Sick Leave</option>
+                            <option>Maternity Leave</option>
+                            <option>Compassionate Leave</option>
+                            <option>Study Leave</option>
+                            <option>Other</option>
+                          </select>
+                        </div>
+
+
+                        <div class="col-md-3">
+                          <label class="form-label fw-bold">
+                            Start Date
+                          </label>
+
+                          <input type="date" class="form-control" id="staffLeavePreviewStart">
+                        </div>
+
+
+                        <div class="col-md-3">
+                          <label class="form-label fw-bold">
+                            End Date
+                          </label>
+
+                          <input type="date" class="form-control" id="staffLeavePreviewEnd">
+                        </div>
+
+
+                        <div class="col-md-4">
+                          <label class="form-label fw-bold">
+                            Requested Days
+                          </label>
+
+                          <div class="leave-preview-value-box">
+                            <span id="staffLeavePreviewRequestedDays">
+                              0
+                            </span>
+                            <small>calendar days</small>
+                          </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                          <label class="form-label fw-bold">
+                            Used Leave Days
+                          </label>
+
+                          <div class="leave-preview-value-box muted">
+                            <span id="staffLeaveUsedDays">—</span>
+                            <small id="staffLeaveUsedDaysLabel">
+                              Used this year
+                            </small>
+                          </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                          <label class="form-label fw-bold">
+                            Remaining Balance
+                          </label>
+
+                          <div class="leave-preview-value-box muted">
+                            <span id="staffLeaveRemainingDays">—</span>
+                            <small id="staffLeaveRemainingDaysLabel">
+                              Remaining this year
+                            </small>
+                          </div>
+                        </div>
+
+
+                        <div class="col-md-12">
+                          <label class="form-label fw-bold">
+                            Reason for Leave
+                          </label>
+
+                          <textarea class="form-control" id="staffLeavePreviewReason" rows="4"
+                            placeholder="Explain the reason for this leave request"></textarea>
+                        </div>
+
+
+                        <div class="col-md-12">
+                          <div class="alert alert-danger d-none mb-0" id="staffLeavePreviewDateError"></div>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <div class="col-lg-4">
+
+                  <div class="card border-0 shadow-sm rounded-4 mb-3">
+
+                    <div class="card-body p-4">
+
+                      <h6 class="fw-bold mb-3">
+                        <i class="fa-solid fa-user-tie me-2"></i>
+                        HR-Assigned Line Manager
+                      </h6>
+
+                      <div class="staff-leave-manager-card" id="staffLeavePreviewManager">
+                        Loading HR-assigned line manager...
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+                  <div class="card border-0 shadow-sm rounded-4">
+
+                    <div class="card-body p-4">
+
+                      <h6 class="fw-bold mb-3">
+                        Application Status
+                      </h6>
+
+                      <div class="leave-status-timeline">
+
+                        <div class="leave-status-item active">
+                          <i class="fa-solid fa-pen-to-square"></i>
+                          <span>Application Draft</span>
+                        </div>
+
+                        <div class="leave-status-item">
+                          <i class="fa-solid fa-user-check"></i>
+                          <span>Line Manager Review</span>
+                        </div>
+
+                        <div class="leave-status-item">
+                          <i class="fa-solid fa-building-shield"></i>
+                          <span>HR Final Review</span>
+                        </div>
+
+                        <div class="leave-status-item">
+                          <i class="fa-solid fa-bell"></i>
+                          <span>Staff Notification</span>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <!-- STAFF_LEAVE_LIVE_WORKFLOW_V1 -->
+              <div class="alert d-none mt-4 mb-3" id="staffLeaveLiveAlert" role="alert"></div>
+
+              <div class="alert alert-success mt-4 mb-0">
+
+                <div class="fw-bold">
+                  <i class="fa-solid fa-circle-check me-1"></i>
+                  Connected Leave Workflow
+                </div>
+
+                <div class="small mt-1">
+                  Your application will first go to your HR-assigned line
+                  manager. HR will make the final decision after the manager's
+                  review.
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="modal-footer border-0 px-4 pb-4 bg-light">
+
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+
+              <button type="button" class="btn btn-outline-primary" id="btnStaffLeavePreviewHistory">
+                <i class="fa-solid fa-clock-rotate-left me-1"></i>
+                My Leave History
+              </button>
+
+              <button type="button" class="btn btn-secondary" id="btnStaffLeavePreviewSaveDraft">
+                <i class="fa-solid fa-floppy-disk me-1"></i>
+                Save Draft
+              </button>
+
+              <button type="button" class="btn btn-primary" id="btnStaffLeavePreviewSubmit">
+                <i class="fa-solid fa-paper-plane me-1"></i>
+                Submit Application
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+
+
+      
+
+      <!-- LINE_MANAGER_LEAVE_POPUP_V1 -->
+
+
+      <!-- STAFF_TEAM_LEAVE_BUTTON_ONLY_SOURCE_FIX_V1 -->
+      
+
+      <div class="modal fade" id="staffTeamLeaveReviewModalV1" tabindex="-1"
+        aria-labelledby="staffTeamLeaveReviewModalLabelV1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+
+          <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+            <div class="staff-leave-preview-header text-white p-4">
+
+              <div class="d-flex justify-content-between align-items-start gap-3">
+
+                <div>
+                  <div class="small text-uppercase fw-bold opacity-75">
+                    Line Manager Review
+                  </div>
+
+                  <h4 class="modal-title fw-bold mt-1 mb-1" id="staffTeamLeaveReviewModalLabelV1">
+                    <i class="fa-solid fa-user-check me-2"></i>
+                    Team Leave Requests
+                  </h4>
+
+                  <div class="small opacity-90">
+                    Recommend, reject, return, or cancel requests assigned to you.
+                  </div>
+                </div>
+
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+
+              </div>
+
+            </div>
+
+            <div class="modal-body bg-light p-4">
+
+              <div class="alert alert-info" id="staffTeamLeaveReviewSummaryV1">
+                Loading team leave requests...
+              </div>
+
+              <div id="staffTeamLeaveReviewBodyV1">
+                <div class="text-center py-5 text-muted">
+                  <i class="fa-solid fa-spinner fa-spin me-2"></i>
+                  Loading requests...
+                </div>
+              </div>
+
+            </div>
+
+            <div class="modal-footer bg-light border-0 px-4 pb-4">
+
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+
+              <button type="button" class="btn btn-primary" id="btnReloadStaffTeamLeaveModalV1">
+                <i class="fa-solid fa-rotate me-1"></i>
+                Reload Requests
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- STAFF_LEAVE_LIVE_WORKFLOW_V1 -->
+      <div class="modal fade" id="staffLeaveHistoryModal" tabindex="-1" aria-labelledby="staffLeaveHistoryModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+
+          <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+            <div class="staff-leave-preview-header text-white p-4">
+
+              <div class="d-flex justify-content-between align-items-start gap-3">
+
+                <div>
+                  <div class="small text-uppercase fw-bold opacity-75">
+                    Staff Leave Services
+                  </div>
+
+                  <h4 class="modal-title fw-bold mt-1 mb-1" id="staffLeaveHistoryModalLabel">
+                    <i class="fa-solid fa-clock-rotate-left me-2"></i>
+                    My Leave History
+                  </h4>
+
+                  <div class="small opacity-90">
+                    Track line-manager and HR decisions.
+                  </div>
+                </div>
+
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+
+              </div>
+
+            </div>
+
+            <div class="modal-body bg-light p-4">
+
+              <div class="alert alert-info" id="staffLeaveHistorySummary">
+                Loading your leave records...
+              </div>
+
+              <div id="staffLeaveHistoryBody">
+
+                <div class="text-center py-5 text-muted">
+                  <i class="fa-solid fa-spinner fa-spin me-2"></i>
+                  Loading leave history...
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="modal-footer border-0 bg-light px-4 pb-4">
+
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="modal fade" id="staffLeaveWorkingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+
+          <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+            <div class="modal-body p-5 text-center">
+
+              <div class="staff-leave-working-icon mx-auto mb-3">
+                <i class="fa-solid fa-person-digging"></i>
+              </div>
+
+              <h4 class="fw-bold" id="staffLeaveWorkingTitle">
+                HR is working on it
+              </h4>
+
+              <p class="text-muted mb-3" id="staffLeaveWorkingMessage">
+                This action will become available when HR activates the
+                connected leave workflow.
+              </p>
+
+              <div class="alert alert-warning small">
+                No leave application has been saved, submitted or changed.
+              </div>
+
+              <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal">
+                Understood
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- =========================================================
+     LINE_MANAGER_CONTROL_V1
+========================================================== -->
+
+
+
+      <!-- =========================================================
+     REPORT ISSUE MODAL (POSTS TO /support/report_issue)
+========================================================== -->
+      <div class="modal fade" id="reportIssueModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div>
+                <h5 class="modal-title">
+                  <i class="fa-solid fa-triangle-exclamation" style="color: var(--nh-warning);"></i>
+                  Report a Problem
+                </h5>
+                <div class="help-hint">
+                  This sends a report to the developer/support desk. You can attach a screenshot (jpg/png/pdf).
+                </div>
+              </div>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+              <div id="issueAlert" class="alert d-none" role="alert"></div>
+
+              <form id="issueForm" enctype="multipart/form-data">
+                <input type="hidden" name="page" value="Staff Dashboard">
+
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <label class="form-label fw-bold">Category</label>
+                    <select class="form-select" name="category" required>
+                      <option value="Bug" selected>Bug</option>
+                      <option value="Login/Access">Login/Access</option>
+                      <option value="Attendance">Attendance</option>
+                      <option value="UI/UX">UI/UX</option>
+                      <option value="Feature Request">Feature Request</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="form-label fw-bold">Severity</label>
+                    <select class="form-select" name="severity" required>
+                      <option value="low">Low</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="high">High</option>
+                      <option value="urgent">Urgent</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="form-label fw-bold">Your Name (optional)</label>
+                    <input class="form-control" name="reporter" placeholder="e.g. Peterben Ajuga">
+                  </div>
+
+                  <div class="col-md-12">
+                    <label class="form-label fw-bold">Title</label>
+                    <input class="form-control" name="title" placeholder="Short summary of the issue" required>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label class="form-label fw-bold">Message</label>
+                    <textarea class="form-control" name="message" rows="5"
+                      placeholder="Describe what happened, what you expected, and any error message you saw..."
+                      required></textarea>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label class="form-label fw-bold">Attachment (optional)</label>
+                    <input class="form-control" type="file" name="attachment" accept=".jpg,.jpeg,.png,.pdf">
+                    <div class="help-hint mt-1">
+                      Allowed: jpg, png, pdf
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Close</button>
+              <button class="btn btn-primary" type="button" id="btnSendIssue">
+                <i class="fa-solid fa-paper-plane me-1"></i> Send Report
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+      <!-- the js :start -->
+      
+
+      
+      <!-- the js :end -->
+
+      
+
+
+      
+
+
+      
+
+
+    </div>
+  </div>
+
+  
+
+
+  <script src="app.js"></script>
+</body>
+
+</html>

@@ -10,10 +10,18 @@ from generate_geo_samples import build_geo_samples
 import requests
 import json
 import re
+from dotenv import load_dotenv
+import os
 
 
-staff_id = "NH-1224"
-password = "vuM49jeCGz8KBpA"
+# Load .env from the current directory
+load_dotenv()
+
+staff_id = os.getenv("STAFF_ID")
+password = os.getenv("PASSWORD")
+
+if not staff_id or not password:
+    raise RuntimeError("STAFF_ID or PASSWORD is missing. Add it to your .env file.")
 
 url = "https://thenewhorizonsapp.onrender.com"
 auth_url = "/auth/login"
@@ -39,13 +47,12 @@ s.headers.update({
 
 # 1) GET the login page with the session (this sets the session cookie)
 r1 = s.get(f"{BASE}/auth/login")
-print(r1.status_code, len(r1.text))
-
+print("Start")
 # 2) Extract the CURRENT csrf_token from the rendered form
 m = re.search(r'name="csrf_token"\s+value="([^"]+)"', r1.text)
 assert m, "csrf_token not found — did the page render differently?"
 csrf = m.group(1)
-print("csrf:", csrf)
+print("decoding the csrf")
 
 sample = build_geo_samples(
     start_lat=params["lat"],
@@ -69,17 +76,22 @@ body = {
     "geo_samples": json.dumps(sample)
 }
 
-
+print("sending the geo")
 
 resp = s.post(url + auth_url, data=body)#, allow_redirects=False)
-
+print("reciving the geo")
 print("status  :", resp.status_code)
 # print("location:", resp.headers.get("Location"))
 # print("csrf err:", "Security check failed" in resp.text)
 # print("len body:", len(resp.text))
 # print(resp.text)
+if "/auth/login" in resp.url:
+    raise SystemExit("❌ still on login page — auth failed")
+
+r2 = s.get(f"{BASE}/attendance/staff")
+
 with open("dump.html", "w", encoding="utf-8") as f:
-    f.write(resp.text)
+    f.write(r2.text)
 
 # resp = s.post(url+auth_url, data=body)
 # print(resp.text)
